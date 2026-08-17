@@ -1,0 +1,29 @@
+:root {
+  /* Light Mode */
+  --lm-bg: #F6F7F9;
+  --lm-surface: #FFFFFF;
+  --lm-text: #1E2530;
+  --lm-muted: #6B7280;
+  --lm-accent: #0F766E;
+  --lm-border: #E3E6EA;
+
+  /* Dark Mode */
+  --dm-bg: #12161C;
+  --dm-surface: #1B212B;
+  --dm-text: #E7EAEE;
+  --dm-muted: #9CA3AF;
+  --dm-accent: #2DD4BF;
+  --dm-border: #2A313C;
+}
+
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  transition: all 0.3s;
+}
