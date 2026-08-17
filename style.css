@@ -1,21 +1,41 @@
 :root {
-  /* Light Mode */
-  --lm-bg: #F6F7F9;
-  --lm-surface: #FFFFFF;
-  --lm-text: #1E2530;
-  --lm-muted: #6B7280;
-  --lm-accent: #0F766E;
-  --lm-border: #E3E6EA;
-
-  /* Dark Mode */
-  --dm-bg: #12161C;
-  --dm-surface: #1B212B;
-  --dm-text: #E7EAEE;
-  --dm-muted: #9CA3AF;
-  --dm-accent: #2DD4BF;
-  --dm-border: #2A313C;
+  --bg: #eeece4;
+  --bg-soft: #e4e1d6;
+  --card: #f8f6f0;
+  --ink: #2a2924;
+  --ink-soft: #6b6a60;
+  --line: #cbc7b8;
+  --accent: #2f5d62;
+  --accent-soft: #dce8e6;
+  --danger: #a3402f;
+  --work: #3b5ba5;
+  --personal: #a3402f;
+  --shopping: #8a6d3b;
+  --other: #6b6b6b;
+  --shadow: 0 1px 0 rgba(42, 41, 36, 0.06);
+  --radius: 3px;
+  --lt-btn-bg: #f5ffaa;
+  --dk-btn-bg: #8e8e8d;
 }
 
+[data-theme="dark"] {
+  --bg: #1b1a17;
+  --bg-soft: #201f1b;
+  --card: #24231f;
+  --ink: #ece8dc;
+  --ink-soft: #9a968a;
+  --line: #3a382f;
+  --accent: #6fb3ac;
+  --accent-soft: #24322f;
+  --danger: #d97a63;
+  --work: #7f9fdc;
+  --personal: #d97a63;
+  --shopping: #cbab6f;
+  --other: #9a968a;
+  --shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* ==================== */
 
 * {
   padding: 0;
@@ -23,7 +43,178 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  transition: all 0.3s;
+html {
+  font-size: 10px;
 }
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", sans-serif;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 4rem 2rem 8rem;
+}
+
+.sheet {
+  width: 100%;
+  max-width: 84rem;
+}
+
+/* ==== HEADER ========== */
+
+header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2.8rem;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 1.4rem;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brand .eyebrow {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+
+.brand h1 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+#theme-toggle {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  width: 3.8rem;
+  height: 3.8rem;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  transition:
+    transform 0.15s ease,
+    background 0.2s ease;
+}
+
+#theme-toggle:hover {
+  transform: translateY(-1px);
+  background-color: var(--dk-btn-bg);
+}
+#theme-toggle:active {
+  transform: translateY(0);
+  /* background-color: var(--lt-btn-bg); */
+}
+
+/* ========== ADD TASK ========== */
+
+.add-form {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.4rem;
+  margin-bottom: 2.2rem;
+}
+
+.add-form .row1 {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+#title-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font-family: "Inter", sans-serif;
+  font-size: 1.5rem;
+  padding: 6px 2px;
+  outline: none;
+}
+
+#title-input::placeholder {
+  color: var(--ink-soft);
+}
+
+#title-input:focus {
+  border-bottom-color: var(--accent);
+}
+
+.row2 {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+select,
+#date-input {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1.2rem;
+  background: var(--bg-soft);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  outline: none;
+  cursor: pointer;
+}
+
+select:focus,
+#date-input:focus {
+  border-color: var(--accent);
+}
+
+.add-btn {
+  margin-left: auto;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--radius);
+  padding: .8rem 1.6rem;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: opacity 0.15s ease;
+}
+.add-btn:hover {
+  opacity: 0.85;
+}
+.add-btn:active {
+  opacity: 0.7;
+}
+
+
+/* ======= Filter section ========= */
+
