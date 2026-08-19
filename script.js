@@ -153,6 +153,72 @@ function buildCard(task) {
 }
 
 
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+
+// ========== Actiona =====================
+
+
+function addTask(title, category, priority, dueDate) {
+  tasks.unshift({
+    id: Date.now(),
+    title: title.trim(),
+    completed: false,
+    category,
+    priority,
+    dueDate: dueDate || ''
+  });
+  render();
+}
+
+
+
+function toggleTask(id) {
+  const task = tasks.find(t => t.id === id);
+  if (task) task.completed = !task.completed;
+  render();
+}
+
+
+
+function deleteTask(id) {
+  tasks = tasks.filter(t => t.id !== id);
+  render();
+}
+
+
+function enableEditMode(card, id) {
+  const task = tasks.find(t => t.id === id);
+  if (!task) return;
+  const titleSpan = card.querySelector('.task-title');
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'task-title-input';
+  input.value = task.title;
+  titleSpan.replaceWith(input);
+  input.focus();
+  input.setSelectionRange(input.value.length, input.value.length);
+
+  // setSelectionRange is used to select a range of text in the input field
+  // takes 2 parameters start and end of the selection range
+
+  function commit() {
+    const newTitle = input.value.trim();
+    if (newTitle) task.title = newTitle;
+    render();
+  }
+
+  input.addEventListener('blur', commit);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
+    if (e.key === 'Escape') { e.preventDefault(); render(); }
+  });
+}
+
 
 
 
@@ -169,3 +235,62 @@ form.addEventListener('submit', (e) => {
   dateInput.value = '';
   titleInput.focus();
 });
+
+
+// Event delegation
+
+
+taskList.addEventListener('click', (e) => {
+  const card = e.target.closest('.task-card');
+  if (!card) return;
+  const id = Number(card.dataset.id);
+
+  if (e.target.closest('.delete-btn')) {
+    deleteTask(id);
+  } else if (e.target.closest('.edit-btn')) {
+    enableEditMode(card, id);
+  }
+});
+
+
+// toggleTask is made above
+// attribute data-id will have a string value hence its converted to Number
+
+taskList.addEventListener('change', (e) => {
+  if (e.target.classList.contains('complete-btn')) {
+    const card = e.target.closest('.task-card');
+    toggleTask(Number(card.dataset.id));
+  }
+});
+
+
+// status filter declared above
+
+
+
+statusTabs.addEventListener('click', (e) => {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  statusFilter = btn.dataset.status;
+  [...statusTabs.children].forEach(b => b.classList.toggle('active', b === btn));
+  // .toggle takes 2 arguments here, classname & force
+  // 2 arg gives true only for the button thats clicked hence onlly that one receives the active class
+  render();
+});
+
+
+
+
+
+categoryFilter.addEventListener('change', () => {
+  categoryFilterValue = categoryFilter.value;
+  render();
+});
+
+
+
+// ======== Initial rendering ========
+
+
+initTheme();
+render();

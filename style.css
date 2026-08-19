@@ -370,7 +370,7 @@ select:focus,
   display: block;
 }
 
-/* nthina nn nokkanam */
+/* In enable edit mode we make an element with this cllass */
 
 .task-title-input {
   font-family: "Inter", sans-serif;
