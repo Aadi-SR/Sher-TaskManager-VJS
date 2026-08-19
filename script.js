@@ -163,6 +163,8 @@ function escapeHtml(str) {
 // ========== Actiona =====================
 
 
+// the Tasks get there id from here, only 6 digit shows bewcause of the slice in the buildCard function, but the id is still unique because it is generated from Date.now() which gives a unique timestamp in milliseconds.
+
 function addTask(title, category, priority, dueDate) {
   tasks.unshift({
     id: Date.now(),
